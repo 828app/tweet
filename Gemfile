@@ -6,8 +6,8 @@ ruby '2.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 # Use mysql as the database for Active Record
-# gem 'mysql2', '>= 0.4.4'
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '>= 0.4.4'
+# gem 'mysql2', '0.3.18'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
@@ -35,6 +35,9 @@ gem 'mechanize'
 gem 'twitter'
 
 gem 'dotenv-rails'
+
+gem 'pry-rails'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

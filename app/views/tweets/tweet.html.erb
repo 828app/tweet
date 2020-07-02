@@ -1,0 +1,16 @@
+<%= form_with :url => {:controller => :tweets, :action => :create} do |f|  %>
+  <%= f.text_field :topicid, placeholder: 'トピックID', class:'form-control' %>
+  <%= f.text_field :title, placeholder: 'タイトル', class:'form-control' %>
+  <%= f.text_field :keyword, placeholder: '検索ワード', class:'form-control' %>
+  <%= f.text_field :favorite, placeholder: '最低いいね数', class:'form-control' %>
+  <%= f.text_field :retweet, placeholder: '最知恵リツイート数', class:'form-control' %>
+  <%= f.submit %>
+<% end %>
+
+
+<% @tweets.each do |tweet| %>
+      <div class="topic">
+        <%= tweet.title %>
+        <br>
+  
+<% end %>
