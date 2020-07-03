@@ -1,4 +1,6 @@
 desc "This task is called by the Heroku scheduler add-on"
+
+
 task :tweet => :environment do
   $client = Twitter::REST::Client.new do |t|
       t.consumer_key        = ENV["CONSUMER_KEY"]
@@ -7,18 +9,23 @@ task :tweet => :environment do
       t.access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
     end
 
+  topics = Tweet.where("onoff = 1")
+  topics.each do |tp|
 
-  tweets = $client.search("寿司　食べたい", count: 10, result_type: "recent", exclude: "retweets")
-  i = 0
-  tweets.each do |tw|
-    break if i > 5
-    # puts tw.to_json
-    puts tw.text
-    puts ""
-    # $client.update("@#{tw.user.screen_name}\n５５", options = {:in_reply_to_status_id => tw.id})
-    i += 1
+    tweets = $client.search(tp.keyword, count: 10, result_type: "recent", exclude: "retweets")
+    i = 0
+    tweets.each do |tw|
+      break if i > tp.tweet_num
+      break if i > 3 #どんなに多くても上限５０回
+      if tw.favorite_count >= tp.favorite && tw.retweet_count >= tp.retweet
+        puts tw.to_json
+        puts tw.text
+        puts ""
+         $client.update("@#{tw.user.screen_name}\n皆様の意見をお聞かせください。\n【#{tp.title}】\n\nhttp://yoronjp.org/topics/#{tp.topicid}", options = {:in_reply_to_status_id => tw.id})
+        i += 1
+      end
+    end
   end
-
 end
 
 task :delete => :environment do

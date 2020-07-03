@@ -6,6 +6,7 @@ class CreateTweets < ActiveRecord::Migration[6.0]
       t.string :keyword
       t.integer :favorite
       t.integer :retweet
+      t.integer :tweet_num
       t.integer :onoff
       t.timestamps
     end

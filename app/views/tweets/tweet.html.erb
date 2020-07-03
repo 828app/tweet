@@ -1,16 +1,59 @@
+<div class ="new">
 <%= form_with :url => {:controller => :tweets, :action => :create} do |f|  %>
   <%= f.text_field :topicid, placeholder: 'トピックID', class:'form-control' %>
   <%= f.text_field :title, placeholder: 'タイトル', class:'form-control' %>
   <%= f.text_field :keyword, placeholder: '検索ワード', class:'form-control' %>
-  <%= f.text_field :favorite, placeholder: '最低いいね数', class:'form-control' %>
-  <%= f.text_field :retweet, placeholder: '最知恵リツイート数', class:'form-control' %>
-  <%= f.submit %>
+  <%= f.text_field :favorite, placeholder: '最低いいね数', class:'form-control' %><!-- リプライを送る対象ツイートの最低いいね数-->
+  <%= f.text_field :retweet, placeholder: '最知恵リツイート数', class:'form-control' %><!-- リプライを送る対象ツイートの最低リツイート数 -->
+  <%= f.text_field :tweet_num, placeholder: 'リプ回数', class:'form-control' %><!-- ツイートの検索結果から何回リプライを送るか -->
+  <%= f.submit "送信" %>
 <% end %>
+</div>
 
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr style="font-size:5px;">
+    <th>topicid</th>
+    <th>タイトル</th>
+    <th>検索ワード</th>
+    <th>いいね数</th>
+    <th>リツイート数</th>
+    <th>リプ回数</th>
+  </tr>
 
-<% @tweets.each do |tweet| %>
-      <div class="topic">
-        <%= tweet.title %>
-        <br>
-  
-<% end %>
+  <% @tweets.each do |tweet| %>
+    <% if tweet.onoff == 1 %>
+      <tr class="on row">
+    <% else %>
+      <tr class="off row">
+    <% end %>
+        <%= form_with :url => {:controller => :tweets, :action => :edit}, :class => 'nokaigyo' do |f|  %>
+          <%= f.hidden_field :id, value: tweet.id %>   <!-- hiddenでトピックid渡す -->
+          <td class = "row"><%= f.text_field :topicid, placeholder: 'トピックID',value:tweet.topicid ,:size => "5*5" %></td>
+          <td><%= f.text_field :title, placeholder: 'タイトル',value:tweet.title, :size => "60*60", style:"font-size:18px" %></td>
+          <td><%= f.text_field :keyword, placeholder: '検索ワード', value:tweet.keyword %></td>
+          <td><%= f.text_field :favorite, placeholder: 'いいね最小', value:tweet.favorite, :size => "5*5" %></td>
+          <td><%= f.text_field :retweet, placeholder: 'リツイート最小',value:tweet.retweet, :size => "5*5" %></td>
+          <td><%= f.text_field :tweet_num, placeholder: 'リプ回数', value:tweet.tweet_num, :size => "2*2" %></td>
+          <td><%= f.submit "変更" %></td>
+        <% end %>
+
+          <td>
+            <%= form_with :url => {:controller => :tweets, :action => :onoff} do |f|  %>
+              <%= f.hidden_field :id, value: tweet.id %>
+              <% if tweet.onoff == 1 %>
+                <%= f.submit "off" %>
+              <% else %>
+                <%= f.submit "on"  %>
+              <% end %>
+            <% end %>
+          </td>
+
+          <td>
+            <%= form_with :url => {:controller => :tweets, :action => :delete} do |f|  %>
+              <%= f.hidden_field :id, value: tweet.id %>
+              <%= f.submit "削除",data: { confirm: "削除するよ？"} %>
+            <% end %>
+          </td>
+      </tr>
+  <% end %>
+</table>

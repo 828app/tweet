@@ -1,0 +1,4 @@
+<%= form_with :url => {:controller => :tweets, :action => :login} do |f|  %>
+  <%= f.text_field :password, placeholder: 'トピックID', class:'form-control' %>
+  <%= f.submit "送信" %>
+<% end %>
