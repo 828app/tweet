@@ -19,6 +19,7 @@ class TweetsController < ApplicationController
     tweet.favorite =  params[:favorite]
     tweet.retweet = params[:retweet]
     tweet.tweet_num = params[:tweet_num]
+    tweet.tweet_time = params[:tweet_time]
     tweet.save
     redirect_to action: 'tweet'
   end
@@ -52,7 +53,7 @@ class TweetsController < ApplicationController
   private
   def create_params
     params[:onoff]=1
-      params.permit(:topicid, :title, :keyword,:favorite,:retweet,:tweet_num,:onoff)
+      params.permit(:topicid, :title, :keyword,:favorite,:retweet,:tweet_num,:tweet_time,:onoff)
   end
 
   def require_login

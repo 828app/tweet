@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_135436) do
     t.integer "favorite"
     t.integer "retweet"
     t.integer "tweet_num"
+    t.integer "tweet_time"
     t.integer "onoff"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

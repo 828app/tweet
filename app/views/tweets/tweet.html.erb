@@ -4,8 +4,10 @@
   <%= f.text_field :title, placeholder: 'タイトル', class:'form-control' %>
   <%= f.text_field :keyword, placeholder: '検索ワード', class:'form-control' %>
   <%= f.text_field :favorite, placeholder: '最低いいね数', class:'form-control' %><!-- リプライを送る対象ツイートの最低いいね数-->
-  <%= f.text_field :retweet, placeholder: '最知恵リツイート数', class:'form-control' %><!-- リプライを送る対象ツイートの最低リツイート数 -->
-  <%= f.text_field :tweet_num, placeholder: 'リプ回数', class:'form-control' %><!-- ツイートの検索結果から何回リプライを送るか -->
+  <%= f.text_field :retweet, placeholder: '最低リツイート数', class:'form-control' %><!-- リプライを送る対象ツイートの最低リツイート数 -->
+  <%= f.text_field :tweet_num, placeholder: 'リプ回数', :size => "8*2" %><!-- ツイートの検索結果から何回リプライを送るか -->
+  <%= f.text_field :tweet_time, placeholder: '時間', :size => "5*2" %><!-- ツイートの検索結果から何回リプライを送るか -->
+
   <%= f.submit "送信" %>
 <% end %>
 </div>
@@ -18,6 +20,7 @@
     <th>いいね数</th>
     <th>リツイート数</th>
     <th>リプ回数</th>
+    <th>時間</th>
   </tr>
 
   <% @tweets.each do |tweet| %>
@@ -26,15 +29,16 @@
     <% else %>
       <tr class="off row">
     <% end %>
-        <%= form_with :url => {:controller => :tweets, :action => :edit}, :class => 'nokaigyo' do |f|  %>
-          <%= f.hidden_field :id, value: tweet.id %>   <!-- hiddenでトピックid渡す -->
+        <%= form_with :url => {:controller => :tweets, :action => :edit} do |f|  %>
+          <%= f.hidden_field :id, value: tweet.id %>   <!-- hiddenでツイートid渡す -->
           <td class = "row"><%= f.text_field :topicid, placeholder: 'トピックID',value:tweet.topicid ,:size => "5*5" %></td>
           <td><%= f.text_field :title, placeholder: 'タイトル',value:tweet.title, :size => "60*60", style:"font-size:18px" %></td>
           <td><%= f.text_field :keyword, placeholder: '検索ワード', value:tweet.keyword %></td>
           <td><%= f.text_field :favorite, placeholder: 'いいね最小', value:tweet.favorite, :size => "5*5" %></td>
           <td><%= f.text_field :retweet, placeholder: 'リツイート最小',value:tweet.retweet, :size => "5*5" %></td>
           <td><%= f.text_field :tweet_num, placeholder: 'リプ回数', value:tweet.tweet_num, :size => "2*2" %></td>
-          <td><%= f.submit "変更" %></td>
+          <td><%= f.text_field :tweet_time, placeholder: '時間', value:tweet.tweet_time, :size => "2*2" %></td>
+          <td><%= f.submit "変更",data: { confirm: "変更するよ？"} %></td>
         <% end %>
 
           <td>

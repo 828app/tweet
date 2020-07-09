@@ -8,20 +8,24 @@ task :tweet => :environment do
       t.access_token        = ENV["ACCESS_TOKEN"]
       t.access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
     end
+  time = Time.now.to_s.split(' ')
+  time = time[1].split(':')
+  time = time[0].to_i
 
-  topics = Tweet.where("onoff = 1")
+  topics = Tweet.where(onoff: 1).where(tweet_time: time)
   topics.each do |tp|
 
-    tweets = $client.search(tp.keyword, count: 10, result_type: "recent", exclude: "retweets")
+    tweets = $client.search(tp.keyword, count: 10, exclude: "retweets", result_type:"recent",min_retweets:tp.retweet,min_faves:tp.favorite)
     i = 0
     tweets.each do |tw|
-      break if i > tp.tweet_num
-      break if i > 3 #どんなに多くても上限５０回
-      if tw.favorite_count >= tp.favorite && tw.retweet_count >= tp.retweet
+      # break if i >= tp.tweet_num
+      # break if i > 50 #どんなに多くても上限５０回
+      if tw.favorite_count >= tp.favorite && tw.retweet_count >= tp.retweet && Date.today - (tw.created_at.to_date) < 1 && !(tw.user.name.include?(tp.keyword))
+        puts tw.user.name
         puts tw.to_json
         puts tw.text
         puts ""
-         $client.update("@#{tw.user.screen_name}\n皆様の意見をお聞かせください。\n【#{tp.title}】\n\nhttp://yoronjp.org/topics/#{tp.topicid}", options = {:in_reply_to_status_id => tw.id})
+         # $client.update("@#{tw.user.screen_name}\n皆様の意見をお聞かせください。\n【#{tp.title}】\n\nhttp://yoronjp.org/topics/#{tp.topicid}", options = {:in_reply_to_status_id => tw.id})
         i += 1
       end
     end
@@ -41,9 +45,13 @@ task :delete => :environment do
     if Date.today - (time.to_date) > 7 then
       puts tw.id
       puts tw.favorite_count
-      # client.destroy_status(tw.id)
+      client.destroy_status(tw.id)
     end
   end
+end
+
+task :test1 => :environment do
+
 end
 
 
