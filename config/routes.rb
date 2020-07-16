@@ -8,7 +8,4 @@ Rails.application.routes.draw do
   post 'delete' => 'tweets#delete'
   post 'onoff' => 'tweets#onoff'
   post 'login' => 'tweets#login'
-
-  # post '' => 'topics#comment'
-
 end

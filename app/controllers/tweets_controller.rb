@@ -42,7 +42,7 @@ class TweetsController < ApplicationController
   end
 
   def login
-    if params[:password]== ENV["LOGIN_KEY"]
+    if params[:password]== "aiueo"
        session[:loginsession] = "loginsessi"
        redirect_to action: 'tweet'
     else
