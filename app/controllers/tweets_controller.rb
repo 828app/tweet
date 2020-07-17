@@ -42,6 +42,7 @@ class TweetsController < ApplicationController
   end
 
   def login
+    logger.debug("ログインアクション")
     if params[:password]== ENV["LOGIN_KEY"]
        session[:loginsession] = "loginsessi"
        logger.debug("セッション作成")
