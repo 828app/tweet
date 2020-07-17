@@ -1,16 +1,28 @@
-<div class ="new">
-<%= form_with :url => {:controller => :tweets, :action => :create} do |f|  %>
-  <%= f.text_field :topicid, placeholder: 'トピックID', class:'form-control' %>
-  <%= f.text_field :title, placeholder: 'タイトル', class:'form-control' %>
-  <%= f.text_field :keyword, placeholder: '検索ワード', class:'form-control' %>
-  <%= f.text_field :favorite, placeholder: '最低いいね数', class:'form-control' %><!-- リプライを送る対象ツイートの最低いいね数-->
-  <%= f.text_field :retweet, placeholder: '最低リツイート数', class:'form-control' %><!-- リプライを送る対象ツイートの最低リツイート数 -->
-  <%= f.text_field :tweet_num, placeholder: 'リプ回数', :size => "8*2" %><!-- ツイートの検索結果から何回リプライを送るか -->
-  <%= f.text_field :tweet_time, placeholder: '時間', :size => "5*2" %><!-- ツイートの検索結果から何回リプライを送るか -->
+<table border="1" cellspacing="0" cellpadding="5" class ="new">
+  <tr style="font-size:5px;">
+    <th>topicid</th>
+    <th>タイトル</th>
+    <th>検索ワード</th>
+    <th>いいね数</th>
+    <th>リツイート数</th>
+    <th>リプ回数</th>
+    <th>時間</th>
+  </tr>
+  <tr>
+<%= form_with :url => {:controller => :tweets, :action => :create} do |f|  %></td>
+  <td><%= f.text_field :topicid, placeholder: 'トピックID', :size => "5*5" %></td>
+  <td><%= f.text_field :title, placeholder: 'タイトル', :size => "60*60" %></td>
+  <td><%= f.text_field :keyword, placeholder: '検索ワード', class:'form-control' %></td>
+  <td><%= f.text_field :favorite, placeholder: '最低いいね数',value:5, :size => "8*8" %></td><!-- リプライを送る対象ツイートの最低いいね数-->
+  <td><%= f.text_field :retweet, placeholder: '最低リツイート数',value:0, :size => "8*8" %></td><!-- リプライを送る対象ツイートの最低リツイート数 -->
+  <td><%= f.text_field :tweet_num, placeholder: 'リプ回数',value:5, :size => "8*2" %></td><!-- ツイートの検索結果から何回リプライを送るか -->
+  <td><%= f.text_field :tweet_time, placeholder: '時間', :size => "5*2" %></td><!-- ツイートの検索結果から何回リプライを送るか -->
 
-  <%= f.submit "送信" %>
+  <td><%= f.submit "送信" %></td>
 <% end %>
-</div>
+
+</tr>
+</table>
 
 <table border="1" cellspacing="0" cellpadding="5">
   <tr style="font-size:5px;">
