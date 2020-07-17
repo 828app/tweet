@@ -42,7 +42,6 @@ class TweetsController < ApplicationController
   end
 
   def login
-    logger.debug("ログインアクション")
     if params[:password]== ENV["LOGIN_KEY"]
        session[:loginsession] = "loginsessi"
        logger.debug("セッション作成")
@@ -61,8 +60,6 @@ class TweetsController < ApplicationController
 
   def require_login
     if session[:loginsession].nil?
-      logger.debug("セッションない")
-
      redirect_to action: 'index'
     end
   end
