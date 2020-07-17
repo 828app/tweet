@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :require_login,except: :index
+  before_action :require_login,except: [:index, :login]
 
   def tweet
       @tweets = Tweet.order("updated_at DESC")
