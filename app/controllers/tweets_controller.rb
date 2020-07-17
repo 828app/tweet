@@ -42,8 +42,9 @@ class TweetsController < ApplicationController
   end
 
   def login
-    if params[:password]== "aiueo"
+    if params[:password]== ENV["LOGIN_KEY"]
        session[:loginsession] = "loginsessi"
+       logger.debug("セッション作成")
        redirect_to action: 'tweet'
     else
        redirect_to action: 'index'
@@ -59,6 +60,8 @@ class TweetsController < ApplicationController
 
   def require_login
     if session[:loginsession].nil?
+      logger.debug("セッションない")
+
      redirect_to action: 'index'
     end
   end
