@@ -1,5 +1,5 @@
 <table border="1" cellspacing="0" cellpadding="5" class ="new">
-  <tr style="font-size:5px;">
+  <tr style="font-size:5px;background:#add8e6">
     <th>topicid</th>
     <th>タイトル</th>
     <th>検索ワード</th>
@@ -7,6 +7,7 @@
     <th>リツイート数</th>
     <th>リプ回数</th>
     <th>時間</th>
+    <th></th>
   </tr>
   <tr>
 <%= form_with :url => {:controller => :tweets, :action => :create} do |f|  %></td>
@@ -24,8 +25,8 @@
 </tr>
 </table>
 
-<table border="1" cellspacing="0" cellpadding="5">
-  <tr style="font-size:5px;">
+<table border="1" cellspacing="0" cellpadding="5" style="margin:auto">
+  <tr style="font-size:5px;background:#add8e6">
     <th>topicid</th>
     <th>タイトル</th>
     <th>検索ワード</th>
@@ -33,6 +34,9 @@
     <th>リツイート数</th>
     <th>リプ回数</th>
     <th>時間</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
   <% @tweets.each do |tweet| %>

@@ -15,17 +15,16 @@ task :tweet => :environment do
   topics = Tweet.where(onoff: 1).where(tweet_time: time)
   topics.each do |tp|
 
-    tweets = $client.search(tp.keyword, count: 10, exclude: "retweets", result_type:"recent",min_retweets:tp.retweet,min_faves:tp.favorite)
+    tweets = $client.search(tp.keyword, count:15, exclude: "retweets", result_type:"recent",min_retweets:tp.retweet,min_faves:tp.favorite)
     i = 0
     tweets.each do |tw|
-      # break if i >= tp.tweet_num
-      # break if i > 50 #どんなに多くても上限５０回
-      if tw.favorite_count >= tp.favorite && tw.retweet_count >= tp.retweet && Date.today - (tw.created_at.to_date) < 1 && !(tw.user.name.include?(tp.keyword))
-        puts tw.user.name
-        puts tw.to_json
-        puts tw.text
-        puts ""
-         # $client.update("@#{tw.user.screen_name}\n皆様の意見をお聞かせください。\n【#{tp.title}】\n\nhttp://yoronjp.org/topics/#{tp.topicid}", options = {:in_reply_to_status_id => tw.id})
+      break if i >= tp.tweet_num
+      break if i > 20 #どんなに多くても上限20回
+      if tw.favorite_count >= tp.favorite && tw.retweet_count >= tp.retweet && Date.today - (tw.created_at.to_date) < 1 && !(tw.user.name.include?(tp.keyword)) && !tw.in_reply_to_status_id.is_a?(Integer)
+        # puts tw.to_json
+        # puts tw.text
+        # puts ""
+        $client.update("@#{tw.user.screen_name}\n皆様の意見をお聞かせください。\n【#{tp.title}】\n\nhttp://yoronjp.org/topics/#{tp.topicid}", options = {:in_reply_to_status_id => tw.id})
         i += 1
       end
     end
