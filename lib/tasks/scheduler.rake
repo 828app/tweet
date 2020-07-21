@@ -1,6 +1,5 @@
 desc "This task is called by the Heroku scheduler add-on"
 
-
 task :tweet => :environment do
   $client = Twitter::REST::Client.new do |t|
       t.consumer_key        = ENV["CONSUMER_KEY"]

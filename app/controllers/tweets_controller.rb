@@ -44,7 +44,7 @@ class TweetsController < ApplicationController
   def login
     if params[:password]== ENV["LOGIN_KEY"]
        session[:loginsession] = "loginsessi"
-       logger.debug("セッション作成")
+       # logger.debug("セッション作成")
        redirect_to action: 'tweet'
     else
        redirect_to action: 'index'
