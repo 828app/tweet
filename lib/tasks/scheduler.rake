@@ -48,7 +48,36 @@ task :delete => :environment do
   end
 end
 
+task :daytweet => :environment do
+  client = Twitter::REST::Client.new do |t|
+      t.consumer_key        = ENV["CONSUMER_KEY"]
+      t.consumer_secret     = ENV["CONSUMER_SECRET"]
+      t.access_token        = ENV["ACCESS_TOKEN"]
+      t.access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
+  end
+
+  random = Random.new
+  rnd = random.rand(10)
+  agent = Mechanize.new
+  page = agent.get("http://yoronjp.org/topics/new")
+
+  elements = page.search('h3 a')
+  ele = elements[rnd]
+  title = ele.inner_text
+  topicid = ele.get_attribute(:href)
+
+  client.update("皆様の意見をお聞かせください。\n【#{title}】\n\nhttp://yoronjp.org#{topicid}")
+end
+
 task :test1 => :environment do
+  time = Time.now
+  puts time
+  time= time.since(8.hours)
+  puts time
+  time= time.to_s.split(' ')
+  time = time[1].split(':')
+  time = time[0].to_i
+  puts time == 2
 
 end
 
